@@ -16,7 +16,6 @@ import Booking from "./pages/Booking";
 import Checkin from "./pages/Checkin";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import { DarkModeProvider } from "./context/DarkModeContext";
-//password Supabase: m4nMiy2NWZfXq3oT
 
 const queryClient = new QueryClient({
   // staleTime: amount of time that data will stay in the cache before being refreshed
