@@ -4,16 +4,21 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import { useSignup } from "./useSignup";
+import { useUser } from "./useUser";
 
 // Email regex: /\S+@\S+\.\S+/
 
 function SignupForm() {
   const { signup, isPending } = useSignup();
+  const { user } = useUser();
+  const { fullName: userFullname } = user.user_metadata;
+  const isGuestUser = userFullname.toLowerCase() === "guest";
   const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
 
   function onSubmit({ fullName, email, password }) {
-    signup({ fullName, email, password }, { onSettled: reset });
+    if (!isGuestUser)
+      signup({ fullName, email, password }, { onSettled: reset });
   }
 
   return (
@@ -83,7 +88,7 @@ function SignupForm() {
         >
           Cancel
         </Button>
-        <Button disabled={isPending}>Create new user</Button>
+        <Button disabled={isPending || isGuestUser}>Create new user</Button>
       </FormRow>
     </Form>
   );

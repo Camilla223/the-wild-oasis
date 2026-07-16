@@ -36,12 +36,14 @@ function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={isPending}
+          placeholder="guest@email.com"
         />
       </FormRowVertical>
       <FormRowVertical label="Password">
         <Input
           type="password"
           id="password"
+          placeholder="password123"
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}

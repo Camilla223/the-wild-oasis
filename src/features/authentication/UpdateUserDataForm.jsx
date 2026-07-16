@@ -18,6 +18,8 @@ function UpdateUserDataForm() {
     },
   } = useUser();
 
+  const isGuestUser = currentFullName.toLowerCase() === "guest";
+
   const { updateUser, isUpdating } = useUpdateUser();
 
   const [fullName, setFullName] = useState(currentFullName);
@@ -25,7 +27,7 @@ function UpdateUserDataForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!fullName) return;
+    if (!fullName || isGuestUser) return;
     updateUser(
       { fullName, avatar },
       {
@@ -49,7 +51,7 @@ function UpdateUserDataForm() {
       <FormRow label="Full name">
         <Input
           type="text"
-          disabled={isUpdating}
+          disabled={isUpdating || isGuestUser}
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
           id="fullName"
@@ -57,7 +59,7 @@ function UpdateUserDataForm() {
       </FormRow>
       <FormRow label="Avatar image">
         <FileInput
-          disabled={isUpdating}
+          disabled={isUpdating || isGuestUser}
           id="avatar"
           accept="image/*"
           onChange={(e) => setAvatar(e.target.files[0])}
@@ -67,12 +69,12 @@ function UpdateUserDataForm() {
         <Button
           type="reset"
           variation="secondary"
-          disabled={isUpdating}
+          disabled={isUpdating || isGuestUser}
           onClick={handleCancel}
         >
           Cancel
         </Button>
-        <Button disabled={isUpdating}>Update account</Button>
+        <Button disabled={isUpdating || isGuestUser}>Update account</Button>
       </FormRow>
     </Form>
   );
